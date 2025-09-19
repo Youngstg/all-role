@@ -6,8 +6,19 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    @apply text-slate-100 antialiased;
     font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #111827;
+    background-image:
+      radial-gradient(circle at 50% 16%, rgba(165, 180, 252, 0.22), transparent 65%),
+      radial-gradient(circle at 54% 84%, rgba(244, 215, 255, 0.18), transparent 68%),
+      radial-gradient(circle at 18% 50%, rgba(208, 250, 230, 0.16), transparent 72%),
+      radial-gradient(circle at 82% 52%, rgba(254, 215, 226, 0.16), transparent 72%),
+      url("/space-stars.svg");
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+    background-size: 1600px 1600px, 1600px 1600px, 1400px 1400px, 1400px 1400px, 640px 640px;
+    background-position: 50% 12%, 52% 88%, 16% 52%, 84% 48%, 0 0;
+    background-attachment: fixed;
   }
 
   code {
@@ -19,8 +30,127 @@
 
 @layer utilities {
   .ai-pattern {
-    background-image: url("/ai-formulas.svg");
-    background-size: 360px;
-    background-repeat: repeat;
+    background-image:
+      radial-gradient(circle at 45% 30%, rgba(165, 180, 252, 0.18), transparent 58%),
+      radial-gradient(circle at 58% 68%, rgba(148, 163, 184, 0.16), transparent 62%);
+    background-size: 1200px 1200px, 1600px 1600px;
+    background-position: 50% 24%, 52% 68%;
+    background-repeat: no-repeat;
+    mix-blend-mode: screen;
+  }
+}
+
+@layer components {
+  .cube-scene {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    perspective: 2000px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .cube-scene {
+      width: 420px;
+      height: 420px;
+    }
+  }
+
+  .cube {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: cube-spin 24s infinite linear;
+    --cube-unit: clamp(58px, 18vw, 88px);
+    --cube-gap: clamp(10px, 3vw, 16px);
+    --cube-offset: calc(var(--cube-unit) + var(--cube-gap));
+  }
+
+  .cube:hover {
+    animation-play-state: paused;
+  }
+
+  .micro-cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--cube-unit);
+    height: var(--cube-unit);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 400ms ease, box-shadow 400ms ease;
+    transform: translate3d(
+        calc(var(--cube-offset) * var(--pos-x) + var(--shift-x, 0px)),
+        calc(var(--cube-offset) * -var(--pos-y) + var(--shift-y, 0px)),
+        calc(var(--cube-offset) * var(--pos-z) + var(--shift-z, 0px))
+      )
+      translate(-50%, -50%)
+      rotateX(var(--rot-x, 0deg))
+      rotateY(var(--rot-y, 0deg))
+      rotateZ(var(--rot-z, 0deg));
+    background: var(--cube-fill, linear-gradient(135deg, #e3e9ff, #fde4f4));
+  }
+
+  .micro-cube::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
+    opacity: 0.35;
+    mix-blend-mode: screen;
+  }
+
+  .micro-cube:hover {
+    box-shadow: 0 30px 70px rgba(12, 20, 38, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  .micro-type-pomodoro {
+    --cube-fill: linear-gradient(135deg, #bef2ff, #fbcfe8);
+  }
+
+  .micro-type-finance {
+    --cube-fill: linear-gradient(135deg, #bbf7d0, #bfdbfe);
+  }
+
+  .micro-type-ideas {
+    --cube-fill: linear-gradient(135deg, #fce7f3, #dbeafe);
+  }
+
+  .micro-type-coding {
+    --cube-fill: linear-gradient(135deg, #c7d2fe, #bae6fd);
+  }
+
+  .micro-type-team {
+    --cube-fill: linear-gradient(135deg, #fde2f3, #ddd6fe);
+  }
+
+  .micro-type-future {
+    --cube-fill: linear-gradient(135deg, #d1fae5, #ede9fe);
+  }
+
+  .micro-type-default {
+    --cube-fill: linear-gradient(135deg, #e5edff, #fdf2f8);
+  }
+
+  @keyframes cube-spin {
+    0% {
+      transform: rotateX(-26deg) rotateY(26deg);
+    }
+    25% {
+      transform: rotateX(-12deg) rotateY(116deg);
+    }
+    50% {
+      transform: rotateX(18deg) rotateY(206deg);
+    }
+    75% {
+      transform: rotateX(32deg) rotateY(296deg);
+    }
+    100% {
+      transform: rotateX(334deg) rotateY(386deg);
+    }
   }
 }

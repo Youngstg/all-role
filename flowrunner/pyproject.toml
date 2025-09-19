@@ -1,0 +1,28 @@
+[project]
+name = "flowrunner"
+version = "0.1.0"
+description = "Mini workflow ala n8n untuk struk keuangan via Telegram"
+requires-python = ">=3.11"
+authors = [{ name = "AllRole" }]
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "httpx>=0.27.0",
+  "pydantic-settings>=2.3.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "ruff>=0.6.0"
+]
+
+[tool.uvicorn]
+factory = false
+app = "flowrunner.main:app"
+host = "0.0.0.0"
+port = 8001
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

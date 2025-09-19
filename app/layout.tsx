@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { PomodoroProvider } from "./providers/PomodoroProvider";
+import { FloatingPomodoroWidget } from "./components/pomodoro/FloatingPomodoroWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        <PomodoroProvider>
+          {children}
+          <FloatingPomodoroWidget />
+        </PomodoroProvider>
       </body>
     </html>
   );

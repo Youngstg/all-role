@@ -1,36 +1,106 @@
 import Link from "next/link";
 
+import { FloatingRubiksCube } from "./components/home/FloatingRubiksCube";
+
+type SectionCard = {
+  title: string;
+  badge: string;
+  href?: string;
+  summary?: string;
+  accent: string;
+};
+
+const sectionCards: SectionCard[] = [
+  {
+    title: "Pomodoro Studio",
+    badge: "Fokus",
+    href: "/pomodoro",
+    summary: "Atur ritme 25/5, preset fleksibel, dan alarm yang tetap hidup meski berpindah halaman.",
+    accent: "from-cyan-200/50 via-cyan-100/10 to-transparent",
+  },
+  {
+    title: "Bot Catatan Keuangan",
+    badge: "Automasi",
+    href: "/catatan-keuangan",
+    summary: "Foto struk, ekstraksi otomatis ke CSV, dan papan ringkas pengeluaran.",
+    accent: "from-emerald-200/45 via-sky-100/10 to-transparent",
+  },
+  {
+    title: "Story Forge",
+    badge: "Segera",
+    accent: "from-fuchsia-100/45 via-purple-100/10 to-transparent",
+  },
+  {
+    title: "Exploration Atlas",
+    badge: "Segera",
+    accent: "from-sky-100/50 via-indigo-100/10 to-transparent",
+  },
+];
+
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-slate-950 text-slate-100">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%)]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 ai-pattern opacity-35 mix-blend-screen" aria-hidden />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" aria-hidden />
+    <div className="relative flex min-h-screen flex-col overflow-hidden text-slate-100">
+      <div className="pointer-events-none absolute inset-0 ai-pattern opacity-70" aria-hidden />
 
-      <main className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-300">
-          AllRole Lab
-        </span>
-        <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
-          Landing page ringan untuk eksperimen AI kamu
-        </h1>
-        <p className="text-base text-slate-300 sm:text-lg">
-          Simpan rencana dan prototipe di satu tempat. Tambah halaman baru di folder <code>app/</code> kapan pun kamu siap
-          melanjutkan ide berikutnya.
-        </p>
-        <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Link
-            href="/pomodoro"
-            className="w-full rounded-full bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 sm:w-auto"
-          >
-            Buka Pomodoro
-          </Link>
-          <Link
-            href="/roadmap"
-            className="w-full rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/40 sm:w-auto"
-          >
-            Lihat rencana tim
-          </Link>
+      <main className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-24">
+        <header className="max-w-3xl space-y-4 text-center sm:text-left">
+          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-300">AllRole Lab</span>
+          <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+            Kubus Rubik melayang berisi dunia kreatif pastel
+          </h1>
+          <p className="text-base text-slate-200 sm:text-lg">
+            Setiap lapisan kubus adalah komposisi panel pastel yang berputar bebas, menampilkan ekosistem ide, tim, kode,
+            dan eksplorasi yang siap kamu buka.
+          </p>
+        </header>
+
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-center">
+          <div className="relative">
+            <div className="absolute -inset-14 hidden rounded-full bg-cyan-200/10 blur-3xl lg:block" aria-hidden />
+            <FloatingRubiksCube />
+          </div>
+
+          <aside className="flex flex-col gap-6">
+            <div className="grid gap-4">
+              {sectionCards.map((section) => (
+                section.href ? (
+                  <Link
+                    key={section.title}
+                    href={section.href}
+                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:border-cyan-200/60 hover:bg-white/10"
+                  >
+                    <span className="inline-flex text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-400">
+                      {section.badge}
+                    </span>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <h3 className="text-lg font-semibold text-white">{section.title}</h3>
+                      <span className="text-sm font-semibold text-cyan-200 opacity-0 transition group-hover:opacity-100">
+                        Buka {"\u2192"}
+                      </span>
+                    </div>
+                    {section.summary && <p className="mt-2 text-sm text-slate-200">{section.summary}</p>}
+                    <div
+                      className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${section.accent} opacity-0 transition duration-300 group-hover:opacity-100`}
+                    />
+                  </Link>
+                ) : (
+                  <div
+                    key={section.title}
+                    className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5"
+                  >
+                    <span className="inline-flex text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-400">
+                      {section.badge}
+                    </span>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <h3 className="text-lg font-semibold text-white">{section.title}</h3>
+                      <span className="text-xs text-slate-400">Dalam pengembangan</span>
+                    </div>
+                    <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${section.accent} opacity-70`} />
+                  </div>
+                )
+              ))}
+            </div>
+          </aside>
         </div>
       </main>
     </div>
